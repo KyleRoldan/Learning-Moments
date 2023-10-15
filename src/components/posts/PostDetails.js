@@ -23,7 +23,7 @@ export const PostDetails = ({ currentUser }) => {
 
   
   
-console.log(post)
+
 
   return <PostWithLikeButton post={post} currentUser={currentUser}/>;
 };

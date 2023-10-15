@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
-import { getAllPosts, getAllLikes, getAllTopics, deletePost } from "../../services/FetchCalls";
+import { getAllPosts, getAllLikes, getAllTopics, deletePost } from "../../services/FetchCalls"
+import { Link } from "react-router-dom";
+
 
 export const MyPost = ({currentUser}) => {
     const [allPosts, setAllPosts] = useState([])
@@ -94,7 +96,7 @@ export const MyPost = ({currentUser}) => {
             onChange={(event) => setSearchTerm(event.target.value)}>
             <option>Select a post</option>
 
-            {allPosts.map((option) => (
+            {filteredMyPosts.map((option) => (
                 <option key={option.id}>
                     {option.title}
                 </option>
@@ -112,7 +114,7 @@ export const MyPost = ({currentUser}) => {
 <div className="postBody">
       {filteredMyPosts?.map((post) => (
         <div key={post.id}>
-          {post.title} - Topic: {topicForPost[post.id]?.map(topic => topic.name)} - Likes: {likeCount[post.id] || 0}
+          <Link to={`/posts/${post.id}`}>{post.title}</Link> - Topic: {topicForPost[post.id]?.map(topic => topic.name)} - Likes: {likeCount[post.id] || 0}
           <button onClick={() => handleDeletePost(post.id)}>DELETE</button>
         </div>
       ))}

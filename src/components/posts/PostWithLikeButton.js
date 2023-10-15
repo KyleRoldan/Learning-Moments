@@ -1,15 +1,22 @@
-import React, { useState,useEffect } from "react";
-import { getAllTopics, likePost } from "../../services/FetchCalls"; // You need to create these service functions
-
+import React, { useState,useEffect } from "react"
+import { getAllTopics, getAllUsers, likePost } from "../../services/FetchCalls"
 
 
 export const PostWithLikeButton = ({ post, currentUser }) => {
   const [isLiked, setIsLiked] = useState(false);
   const [allTopics, setAllTopics] = useState([]);
+  const [allUsers, setAllUsers] = useState([]);
+
 
   useEffect(() => {
     getAllTopics().then((topicsArray) => {
       setAllTopics(topicsArray);
+    });
+  }, []);
+
+  useEffect(() => {
+    getAllUsers().then((usersArray) => {
+      setAllUsers(usersArray);
     });
   }, []);
 
@@ -26,6 +33,12 @@ export const PostWithLikeButton = ({ post, currentUser }) => {
   .filter(topic => topic.id === post.topicsId)
   .map(topic => topic.name);
 
+  const postAuthor = allUsers
+  .filter((user) => user.id === post.userId)
+  .map((user )=> user.name);
+
+
+
   const handleLike = () => {
     if (post.userId !== currentUser.id) {
       likePost(post.id, currentUser.id).then(() => {
@@ -33,11 +46,11 @@ export const PostWithLikeButton = ({ post, currentUser }) => {
       });
     }
   };
-  console.log(postTopic)
+  
   return (
     <div className="post-details">
       <h2>{post.title}</h2>
-      <p>Author: {post.userId}</p>
+      <p>Author:{postAuthor}</p>
       <p>Topic:
       {postTopic}
       </p>

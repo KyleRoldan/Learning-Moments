@@ -1,5 +1,8 @@
 import { useEffect, useState } from "react"
 import { getAllPosts, getAllTopics, submitNewPost } from "../../services/FetchCalls"
+import { Link } from "react-router-dom"
+
+
 
 
 export const NewPost = ({currentUser}) => {
@@ -104,7 +107,7 @@ export const NewPost = ({currentUser}) => {
         <button onClick={() => {
             handlePostSave()
            
-            }}>Add</button>
+            }}><Link to={`/myPost`}>ADD</Link></button>
         
         </div>
 
